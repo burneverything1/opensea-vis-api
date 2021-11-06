@@ -6,7 +6,7 @@ const getImage = async (query) => {
     const response = await axios.get(`https://en.wikipedia.org/wiki/${query}`)
     const html = cheerio.load(response.data)
     const imageUrl = html('td[class=infobox-image]').children('a').children('img').attr('src')
-    return imageUrl
+    return 'https:' + imageUrl
 }
 
 module.exports =  {getImage}
