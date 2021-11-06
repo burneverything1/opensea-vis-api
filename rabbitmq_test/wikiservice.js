@@ -1,6 +1,7 @@
 const amqp = require('amqplib/callback_api')
 const logger = require('../utils/logger')
 require('dotenv').config()
+const wikiservice = require('../services/wikiscrape')
 
 amqp.connect(process.env.CLOUDAMQP_URL, (error0, connection) => {
     if (error0) {
@@ -18,14 +19,17 @@ amqp.connect(process.env.CLOUDAMQP_URL, (error0, connection) => {
             durable: false
         })
         logger.info('awaiting RPC requests')
-        channel.consume(queue, (msg) => {
-            const content = JSON.parse(msg.content)
-            logger.info(content)
+        channel.consume(queue, async (msg) => {
+            const image_query = JSON.parse(msg.content).query
 
-            const response = content.query
+            // get image
+            const image_url = await wikiservice.getImage(image_query)
+            
+            const payload = {"image_url": image_url}
+            logger.info(JSON.stringify(payload))
 
             channel.sendToQueue(msg.properties.replyTo,
-                Buffer.from(response.toString()), {
+                Buffer.from(JSON.stringify(payload)), {
                     correlationId: msg.properties.correlationId
                 })
 
