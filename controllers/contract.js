@@ -2,7 +2,7 @@ const amqp = require('amqplib/callback_api')
 require('dotenv').config()
 const contractRouter = require('express').Router()
 
-contractRouter.get('/:add', async (request, response, next) => {
+contractRouter.get('/:add', async (request, response) => {
     const contract_address = request.params.add
     console.log(contract_address)
 

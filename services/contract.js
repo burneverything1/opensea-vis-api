@@ -32,7 +32,7 @@ amqp.connect(process.env.CLOUDAMQP_URL, (error0, connection) => {
                         const msg_content = JSON.parse(JSON.parse(msg.content).contract)
                         console.log(msg_content);
 
-                        setTimeout((msg_content) => {
+                        setTimeout(() => {
                             connection.close()
                             process.exit(0)
                         }, 500)
