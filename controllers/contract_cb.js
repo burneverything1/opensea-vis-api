@@ -8,12 +8,4 @@ contractRouter_cb.get('/:add', async (request, response) => {
     amqp.connect(process.env.CLOUDAMQP_URL, upon_connection)
 })
 
-const upon_connection = (error0, connection) => {
-    if (error0) {
-        console.log(error0);
-    }
-
-    console.log(test_string);
-}
-
 module.exports = contractRouter_cb
