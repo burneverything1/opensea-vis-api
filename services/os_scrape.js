@@ -4,12 +4,20 @@ const pretty = require('pretty')
 
 const getTopCollections = async () => {
     const response = await axios.get('https://www.nft-stats.com/top-collections/7d')
-    console.log('got here');
     const $ = cheerio.load(response.data)
-    //const top_sales = html('table[class=table.table-sm]').children('table')
-    const table = $('table').children('tbody')
-    console.log(pretty(table.html()));
-    //return top_sales
+
+    const return_data = []
+
+    const table_anchors = $('table').children('tbody').find('a')
+    table_anchors.each((i, element) => {
+        let anchor_text = $(element).text()
+        if (anchor_text !== "" && anchor_text !== '[🔎 Rarity Explorer]') {
+            return_data.push(anchor_text)
+        }
+    })
+
+    console.log(return_data);
+    return return_data
 }
 
 module.exports = {getTopCollections}
