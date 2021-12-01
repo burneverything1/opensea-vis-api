@@ -31,7 +31,7 @@ const getContractData = (contract_add, response) => {
                     channel.consume(queue, (msg) => {
                         if (msg.properties.correlationId == correlationId) {
                             // got contract
-                            //console.log(msg.content.toString());      // test message content
+                            console.log(msg.content.toString());      // test message content
 
                             const msg_content = JSON.parse(JSON.parse(msg.content).contract)
                             response.json(msg_content)
@@ -65,5 +65,4 @@ const generateUUid = () => {
         Math.random().toString()
 }
 
-//getContractData('0xF8C08433DD41eAeE2e424C9E91467aB27772d9ec')
 module.exports = getContractData
