@@ -3,7 +3,7 @@ const app = express()
 const cors = require('cors')
 
 const contractRouter = require('./controllers/contract')
-//const contractRouter_cb = require('./controllers/contract_cb')
+const collectionRouter = require('./controllers/collection')
 
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
@@ -14,7 +14,7 @@ app.use(express.json())
 app.use(middleware.requestLogger)
 
 app.use('/api/contract', contractRouter)
-//app.use('/api/contract_cb', contractRouter_cb)
+app.use('/api/collection', collectionRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
