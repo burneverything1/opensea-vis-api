@@ -31,9 +31,8 @@ const getContractData = (contract_add, response) => {
                     channel.consume(queue, (msg) => {
                         if (msg.properties.correlationId == correlationId) {
                             // got contract
-                            console.log(msg.content.toString());      // test message content
-
                             const msg_content = JSON.parse(JSON.parse(msg.content).contract)
+                            console.log(msg_content);
                             response.json(msg_content)
 
                             setTimeout(() => {
